@@ -40,10 +40,16 @@ namespace MCGalaxy.Gui
 
         NotifyIcon notifyIcon = new NotifyIcon();
         Player curPlayer;
+		bool darkModeEnabled; // Remember the dark mode state
 
         public Window() {
             logCallback = LogMessageCore;
             InitializeComponent();
+			    // Load and apply dark mode to this window and all open forms
+    darkModeEnabled = ColorUtils.LoadDarkMode();
+    ApplyDarkModeToAllWindows(darkModeEnabled);
+    // If you have a menu or checkbox for dark mode, update its checked state here too:
+    // menu_darkMode.Checked = darkModeEnabled;
         }
         
         // warn user if they're using the GUI with a DLL for different server version
@@ -318,7 +324,7 @@ Trying to mix two versions is unsupported - you may experience issues";
                 notifyIcon.Dispose();
             }
             
-            if (Server.shuttingDown || Popup.OKCancel("Really shutdown the server? All players will be disconnected!", "Exit")) {
+            if (Server.shuttingDown || Popup.OKCancel("So, We Want To Shutdown The Server? Are You Sure? (All Players Will Be Disconnected!)", "Exit")) {
                 Server.Stop(false, Server.Config.DefaultShutdownMessage);
                 notifyIcon.Dispose();
             } else {
@@ -333,14 +339,23 @@ Trying to mix two versions is unsupported - you may experience issues";
             if (!hasPropsForm) {
                 propsForm    = new PropertyWindow();
                 hasPropsForm = true; 
+				    // Always apply dark mode to the PropertyWindow when showing
+    ColorUtils.ApplyDarkMode(propsForm, darkModeEnabled);
             }
             
             propsForm.Show();
             if (!propsForm.Focused) propsForm.Focus();
         }
 
-        public static bool hasPropsForm;
-        PropertyWindow propsForm;
+public static bool hasPropsForm;
+PropertyWindow propsForm;
+
+// Place this helper here, NOT inside any other method!
+void ApplyDarkModeToAllWindows(bool dark)
+{
+    foreach (Form f in Application.OpenForms)
+        ColorUtils.ApplyDarkMode(f, dark);
+}
 
         bool alwaysInTaskbar = true;
         void Window_Resize(object sender, EventArgs e) {
