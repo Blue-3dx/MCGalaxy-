@@ -30,8 +30,27 @@ namespace MCGalaxy.Gui
             InitializeComponent();
             zsSettings.LoadFromServer();
             propsZG.SelectedObject = zsSettings;
+
+            // Wire up dark mode checkbox event handler, if checkbox exists
+            if (this.Controls.Find("chkDarkMode", true).Length > 0)
+            {
+                var chk = this.Controls.Find("chkDarkMode", true)[0] as CheckBox;
+                chk.CheckedChanged += chkDarkMode_CheckedChanged;
+                // Apply dark mode initially to match checkbox
+                MCGalaxy.Gui.ColorUtils.ApplyDarkMode(this, chk.Checked);
+            }
         }
         
+        // Add the dark mode event handler
+        private void chkDarkMode_CheckedChanged(object sender, EventArgs e)
+        {
+            var chk = sender as CheckBox;
+            if (chk != null)
+            {
+                MCGalaxy.Gui.ColorUtils.ApplyDarkMode(this, chk.Checked);
+            }
+        }
+
         public void RunOnUI_Async(UIAction act) { BeginInvoke(act); }
 
         void PropertyWindow_Load(object sender, EventArgs e) {

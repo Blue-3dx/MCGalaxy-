@@ -3114,6 +3114,33 @@ namespace MCGalaxy.Gui
             this.tabControl.Controls.Add(this.pageCommands);
             this.tabControl.Controls.Add(this.pageBlocks);
             this.tabControl.Controls.Add(this.pageSecurity);
+			// 
+// pageSettings
+// 
+this.pageSettings = new System.Windows.Forms.TabPage();
+this.chkDarkMode = new System.Windows.Forms.CheckBox();
+
+this.pageSettings.BackColor = System.Drawing.SystemColors.Control;
+this.pageSettings.Location = new System.Drawing.Point(4, 22);
+this.pageSettings.Name = "pageSettings";
+this.pageSettings.Padding = new System.Windows.Forms.Padding(3);
+this.pageSettings.Size = new System.Drawing.Size(498, 521);
+this.pageSettings.TabIndex = 13; // Next available index, adjust if needed
+this.pageSettings.Text = "Settings";
+
+// 
+// chkDarkMode
+// 
+this.chkDarkMode.AutoSize = true;
+this.chkDarkMode.Location = new System.Drawing.Point(20, 20);
+this.chkDarkMode.Name = "chkDarkMode";
+this.chkDarkMode.Size = new System.Drawing.Size(140, 17);
+this.chkDarkMode.TabIndex = 0;
+this.chkDarkMode.Text = "Enable Dark Mode";
+this.chkDarkMode.UseVisualStyleBackColor = true;
+
+this.pageSettings.Controls.Add(this.chkDarkMode);
+this.tabControl.Controls.Add(this.pageSettings);
             this.tabControl.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
@@ -6275,6 +6302,8 @@ namespace MCGalaxy.Gui
         
         
         private System.Windows.Forms.TabPage pageSecurity;
+		private System.Windows.Forms.TabPage pageSettings;
+private System.Windows.Forms.CheckBox chkDarkMode;
         private System.Windows.Forms.GroupBox sec_grpChat;
         private System.Windows.Forms.CheckBox sec_cbChatAuto;
         private System.Windows.Forms.Label sec_lblChatForMute;
