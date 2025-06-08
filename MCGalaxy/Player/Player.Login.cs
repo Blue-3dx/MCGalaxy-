@@ -262,10 +262,6 @@ namespace MCGalaxy
             
             ItemPerms opchat = Chat.OpchatPerms;
             string altsMsg = "λNICK &Sis lately known as: " + alts.Join();
-
-            Chat.MessageFrom(p, altsMsg,
-                             (pl, obj) => pl.CanSee(p) && opchat.UsableBy(pl));
-                         
             //IRCBot.Say(temp, true); //Tells people in op channel on IRC
             altsMsg = altsMsg.Replace("λNICK", name);
             Logger.Log(LogType.UserActivity, altsMsg);
