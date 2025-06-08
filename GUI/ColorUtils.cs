@@ -1,4 +1,4 @@
-﻿/*
+﻿﻿/*
     Copyright 2015 MCGalaxy
     
     Dual-licensed under the Educational Community License, Version 2.0 and
@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO; // <-- Ensure this is present for file operations
 
 namespace MCGalaxy.Gui
 {
@@ -206,12 +207,34 @@ namespace MCGalaxy.Gui
             }
 
             // Special-case for custom controls: ColoredTextBox
-if (control is MCGalaxy.Gui.Components.ColoredTextBox)
-  ((MCGalaxy.Gui.Components.ColoredTextBox) control).NightMode = dark;
+            if (control is MCGalaxy.Gui.Components.ColoredTextBox)
+                ((MCGalaxy.Gui.Components.ColoredTextBox) control).NightMode = dark;
 
             // Recursively apply to all child controls
             foreach (System.Windows.Forms.Control child in control.Controls)
                 ApplyDarkMode(child, dark);
+        }
+
+        // --------------------------------------------
+        // Add these methods BEFORE the closing brace! |
+        // --------------------------------------------
+
+        /// <summary>
+        /// Saves the user's dark mode setting persistently.
+        /// </summary>
+        public static void SaveDarkMode(bool dark)
+        {
+            try { File.WriteAllText("darkmode.txt", dark ? "1" : "0"); }
+            catch { }
+        }
+
+        /// <summary>
+        /// Loads the user's dark mode setting from disk.
+        /// </summary>
+        public static bool LoadDarkMode()
+        {
+            try { return File.ReadAllText("darkmode.txt") == "1"; }
+            catch { return false; }
         }
     }
 }
