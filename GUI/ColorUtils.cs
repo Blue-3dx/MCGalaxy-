@@ -26,7 +26,6 @@ namespace MCGalaxy.Gui
         struct RGB { public double R, G, B; }
         struct HSV { public double H, S, V; }
         
-        
         /// <summary> Calculates the appropriate text colour for the given background colour </summary>
         /// <remarks> Returns black or white colour depending on brightness of the given colour </remarks>
         public static Color CalcTextColor(ColorDesc bgColor) {
@@ -35,7 +34,6 @@ namespace MCGalaxy.Gui
             double L = 0.2126 * c.R + 0.7152 * c.G + 0.0722 * c.B;
             return L > 0.179 ? Color.Black : Color.White;
         }
-        
         
         /// <summary> Converts gamma corrected RGB to linear RGB </summary>
         static RGB sRGBToLinear(ColorDesc c) {
@@ -52,7 +50,6 @@ namespace MCGalaxy.Gui
             if (c <= 0.03928) return c / 12.92;
             return Math.Pow((c + 0.055) / 1.055, 2.4);
         }
-        
         
         /// <summary> Adjust text colour to be easier on the eye on a light or dark background </summary>
         public static Color AdjustBrightness(ColorDesc color, bool nightMode) {
@@ -188,6 +185,33 @@ namespace MCGalaxy.Gui
                     break;
             }
             return rgb;
+        }
+
+        /// <summary>
+        /// Recursively applies dark or light theme to a control and all its children.
+        /// </summary>
+        /// <param name="control">Root control to theme.</param>
+        /// <param name="dark">True for dark mode, false for light mode.</param>
+        public static void ApplyDarkMode(System.Windows.Forms.Control control, bool dark)
+        {
+            if (dark)
+            {
+                control.BackColor = System.Drawing.Color.FromArgb(32, 32, 32);
+                control.ForeColor = System.Drawing.Color.White;
+            }
+            else
+            {
+                control.BackColor = System.Drawing.SystemColors.Window;
+                control.ForeColor = System.Drawing.SystemColors.ControlText;
+            }
+
+            // Special-case for custom controls: ColoredTextBox
+if (control is MCGalaxy.Gui.Components.ColoredTextBox)
+  ((MCGalaxy.Gui.Components.ColoredTextBox) control).NightMode = dark;
+
+            // Recursively apply to all child controls
+            foreach (System.Windows.Forms.Control child in control.Controls)
+                ApplyDarkMode(child, dark);
         }
     }
 }
