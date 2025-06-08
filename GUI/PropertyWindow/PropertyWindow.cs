@@ -19,36 +19,48 @@ using MCGalaxy.Commands;
 using MCGalaxy.Eco;
 using MCGalaxy.Events.GameEvents;
 using MCGalaxy.Games;
+using MCGalaxy.Gui; // For ColorUtils
 
 namespace MCGalaxy.Gui 
 {
     public partial class PropertyWindow : Form 
     {
         ZombieProperties zsSettings = new ZombieProperties();
-        
+
         public PropertyWindow() {
             InitializeComponent();
             zsSettings.LoadFromServer();
             propsZG.SelectedObject = zsSettings;
 
-            // Wire up dark mode checkbox event handler, if checkbox exists
-            if (this.Controls.Find("chkDarkMode", true).Length > 0)
-            {
-                var chk = this.Controls.Find("chkDarkMode", true)[0] as CheckBox;
-                chk.CheckedChanged += chkDarkMode_CheckedChanged;
-                // Apply dark mode initially to match checkbox
-                MCGalaxy.Gui.ColorUtils.ApplyDarkMode(this, chk.Checked);
-            }
+            // --- DARK MODE SUPPORT START ---
+            // Load the last used dark mode setting and apply it to this form
+            bool dark = ColorUtils.LoadDarkMode();
+            if (chkDarkMode != null) chkDarkMode.Checked = dark;
+            ColorUtils.ApplyDarkMode(this, dark);
+
+            // Attach event handler for dark mode checkbox (if not already done in designer)
+            if (chkDarkMode != null)
+                chkDarkMode.CheckedChanged += chkDarkMode_CheckedChanged;
+            // --- DARK MODE SUPPORT END ---
         }
-        
-        // Add the dark mode event handler
+
+        // --- DARK MODE SUPPORT: handler for checkbox ---
         private void chkDarkMode_CheckedChanged(object sender, EventArgs e)
         {
-            var chk = sender as CheckBox;
-            if (chk != null)
-            {
-                MCGalaxy.Gui.ColorUtils.ApplyDarkMode(this, chk.Checked);
-            }
+            bool dark = chkDarkMode.Checked;
+            ColorUtils.SaveDarkMode(dark);
+
+            // Apply to this window
+            ColorUtils.ApplyDarkMode(this, dark);
+
+            // Apply to all open windows (including main)
+            foreach (Form f in Application.OpenForms)
+                ColorUtils.ApplyDarkMode(f, dark);
+
+            // Optionally, sync the menu or checkbox in main window if you want (uncomment if needed)
+            // var main = Application.OpenForms["Window"] as Window;
+            // if (main != null)
+            //     main.menu_darkMode.Checked = dark;
         }
 
         public void RunOnUI_Async(UIAction act) { BeginInvoke(act); }
@@ -57,7 +69,7 @@ namespace MCGalaxy.Gui
             // try to use same icon as main window
             // must be done in OnLoad, otherwise icon doesn't show on Mono
             GuiUtils.SetIcon(this);
-            
+
             OnMapsChangedEvent.Register(HandleMapsChanged, Priority.Low);
             OnStateChangedEvent.Register(HandleStateChanged, Priority.Low);
             GuiPerms.UpdateRanks();
