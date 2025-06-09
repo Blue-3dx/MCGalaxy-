@@ -70,7 +70,7 @@
     <Compile Include="..\PluginStore\Rainbow.cs" />
     <Compile Include="..\PluginStore\Rate.cs" />
     <Compile Include="..\PluginStore\Sprint.cs" />
-    <Compile Include="..\PluginStore\exp.cs" />
+    <!-- <Compile Include="..\PluginStore\exp.cs" /> -->
     <!-- <Compile Include="..\PluginStore\health.cs" /> -->
     <Compile Include="..\PluginStore\shrinkspleef.cs" />
     <!-- <Compile Include="..\PluginStore\spleef.cs" /> -->
