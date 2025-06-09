@@ -40,10 +40,10 @@ namespace MCGalaxy
         public static PlayerMetaList Notes = new PlayerMetaList("text/notes.txt");
         
         /// <summary> *** DO NOT USE THIS! *** Use VersionString, as this field is a constant and is inlined if used. </summary>
-        public const string InternalVersion = "1.9.5.3";
-        public static string Version { get { return InternalVersion; } }
+        public const string InternalVersion = "1.9.5.3"; // its actually 1.0.0.0 but we do this to get plugins and commands from third-party websites working
+        public static string Version { get { return "1.0.0.1"; } } // we can touch this
         
-        public static string SoftwareName = "MCGalaxy";
+        public static string SoftwareName = "MCGalaxy+";
         static string fullName;
         public static string SoftwareNameVersioned {
             // By default, if SoftwareName gets externally changed, that is reflected in SoftwareNameVersioned too
@@ -63,13 +63,14 @@ namespace MCGalaxy
         
         public static readonly List<string> Devs = new List<string>() { "Hetal", "UclCommander" };
         public static readonly List<string> Opstats = new List<string>() { "ban", "tempban", "xban", "banip", "kick", "warn", "mute", "freeze", "setrank" };
-
+        
         public static Level mainLevel;
 
         public static PlayerList reviewlist = new PlayerList();
         static string[] announcements = new string[0];
         public static string RestartPath;
 
+        public static readonly string somethingiguess = "Blue3dx, NassemRB"; 
         // Extra storage for custom commands
         public static ExtrasCollection Extras = new ExtrasCollection();
         
