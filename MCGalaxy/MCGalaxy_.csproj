@@ -62,6 +62,16 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\PluginStore\AntiCheat.cs" />
+    <Compile Include="..\PluginStore\CmdTransition.cs" />
+    <Compile Include="..\PluginStore\Herobrine.cs" />
+    <Compile Include="..\PluginStore\Rainbow.cs" />
+    <Compile Include="..\PluginStore\Rate.cs" />
+    <Compile Include="..\PluginStore\Sprint.cs" />
+    <Compile Include="..\PluginStore\exp.cs" />
+    <Compile Include="..\PluginStore\health.cs" />
+    <Compile Include="..\PluginStore\shrinkspleef.cs" />
+    <Compile Include="..\PluginStore\spleef.cs" />
     <Compile Include="Blocks\Behaviour\BlockBehaviour.cs" />
     <Compile Include="Blocks\Behaviour\DeleteBehaviour.cs" />
     <Compile Include="Blocks\Behaviour\PlaceBehaviour.cs" />
