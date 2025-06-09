@@ -3141,6 +3141,13 @@ this.chkDarkMode.UseVisualStyleBackColor = true;
 
 this.pageSettings.Controls.Add(this.chkDarkMode);
 this.tabControl.Controls.Add(this.pageSettings);
+// Plugin Library Tab & Panel
+this.pagePluginStore = new System.Windows.Forms.TabPage();
+this.pagePluginStore.Text = "Plugin Library";
+this.panelPluginStore = new System.Windows.Forms.FlowLayoutPanel();
+this.panelPluginStore.Dock = System.Windows.Forms.DockStyle.Fill;
+this.pagePluginStore.Controls.Add(this.panelPluginStore);
+this.tabControl.Controls.Add(this.pagePluginStore);
             this.tabControl.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
@@ -6264,6 +6271,8 @@ this.tabControl.Controls.Add(this.pageSettings);
         private System.Windows.Forms.GroupBox rank_grpGeneral;
         
         private System.Windows.Forms.TabPage pageChat;
+		private System.Windows.Forms.TabPage pagePluginStore;
+private System.Windows.Forms.FlowLayoutPanel panelPluginStore;
         private System.Windows.Forms.GroupBox chat_grpTab;
         private System.Windows.Forms.CheckBox chat_cbTabRank;
         private System.Windows.Forms.CheckBox chat_cbTabLevel;
