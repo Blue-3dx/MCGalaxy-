@@ -41,13 +41,14 @@ namespace MCGalaxy
         
         /// <summary> *** DO NOT USE THIS! *** Use VersionString, as this field is a constant and is inlined if used. </summary>
         public const string InternalVersion = "1.9.5.3"; // its actually 1.0.0.0 but we do this to get plugins and commands from third-party websites working
-        public static string Version { get { return "1.0.0.1"; } } // we can touch this
+        public static string Version { get { return InternalVersion; } } // we can touch this, actually we can't lol
+        public static string Version2 = "1.0.0.1";
         
         public static string SoftwareName = "MCGalaxy+";
         static string fullName;
         public static string SoftwareNameVersioned {
             // By default, if SoftwareName gets externally changed, that is reflected in SoftwareNameVersioned too
-            get { return fullName ?? SoftwareName + " " + Version; }
+            get { return fullName ?? SoftwareName + " " + Version2; }
             set { fullName = value; }
         }
 
