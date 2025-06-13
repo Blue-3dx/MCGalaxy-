@@ -1,5 +1,2 @@
-v 10.0.1
-New Dark Mode
-v 1.0.0.0
-First Release
-No "Lately known as" Message
+﻿1.0.0.0
+Nothing
