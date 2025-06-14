@@ -33,6 +33,9 @@ namespace MCGalaxy.Gui
         private bool showingCommandPlugins = false;
         private CheckBox chkShowCommandPlugins;
 
+        // Plugin Library: More Libraries Button
+        private Button btnMoreLibraries;
+
         // Music player field (for MP3, we use WMP COM object, not SoundPlayer)
         private dynamic wmpPlayer = null;
 
@@ -164,6 +167,14 @@ namespace MCGalaxy.Gui
             chkShowCommandPlugins.BringToFront();
             chkShowCommandPlugins.CheckedChanged += new EventHandler(this.PluginLibraryViewChanged);
 
+            // --- MORE LIBRARIES BUTTON ADDITION ---
+            btnMoreLibraries = new Button();
+            btnMoreLibraries.Text = "More Libraries";
+            btnMoreLibraries.Size = new Size(120, 28);
+            btnMoreLibraries.Location = new Point(chkShowCommandPlugins.Right + 20, chkShowCommandPlugins.Top);
+            btnMoreLibraries.Click += BtnMoreLibraries_Click;
+            pagePluginStore.Controls.Add(btnMoreLibraries);
+
             // Previous Page Button
             btnPrevPage = new Button();
             btnPrevPage.Text = "Previous";
@@ -231,11 +242,11 @@ namespace MCGalaxy.Gui
         {
             EnsureMusicDownloadedAndPlay();
 
-            // Keep the checkbox and page buttons, clear only cards
+            // Keep the checkbox, page buttons, page indicator, and more libraries button
             for (int i = pagePluginStore.Controls.Count - 1; i >= 0; i--)
             {
                 Control c = pagePluginStore.Controls[i];
-                if (c != chkShowCommandPlugins && c != btnNextPage && c != btnPrevPage && c != lblPageIndicator)
+                if (c != chkShowCommandPlugins && c != btnNextPage && c != btnPrevPage && c != lblPageIndicator && c != btnMoreLibraries)
                     pagePluginStore.Controls.RemoveAt(i);
             }
 
@@ -248,7 +259,7 @@ namespace MCGalaxy.Gui
             int maxPage = (plugins.Count - 1) / pluginsPerPage;
             if (pluginPage > maxPage) pluginPage = maxPage;
 
-            lblPageIndicator.Text = "Page {pluginPage + 1} of {maxPage + 1}";
+            lblPageIndicator.Text = "Page " + (pluginPage + 1) + " of " + (maxPage + 1);
 
             // Lay out cards, 3 per row, 2 rows
             int cardsInThisPage = Math.Min(pluginsPerPage, plugins.Count - pluginPage * pluginsPerPage);
@@ -326,6 +337,12 @@ namespace MCGalaxy.Gui
             // Enable/disable navigation
             btnPrevPage.Enabled = (pluginPage > 0);
             btnNextPage.Enabled = (pluginPage < maxPage);
+        }
+
+        private void BtnMoreLibraries_Click(object sender, EventArgs e)
+        {
+            var win = new MoreLibrariesWindow();
+            win.Show(this);
         }
 
         private void EnsureMusicDownloadedAndPlay()
@@ -516,12 +533,5 @@ namespace MCGalaxy.Gui
         }
     }
 
-    public class PluginCardData
-    {
-        public string Title;
-        public string Description;
-        public string Credits;
-        public string ThumbnailUrl;
-        public string DownloadUrl;
-    }
+
 }
